@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome interactions",
+  "version": "1.0.0",
+  "description": "On every website we will have the oppurtinity to use some interaction like making website gray, blur or etc...",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
