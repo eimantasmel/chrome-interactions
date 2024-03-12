@@ -1,20 +1,41 @@
-document.body.addEventListener('keydown', (e) => {
-    if(event.ctrlKey && e.key == '`')
+
+
+async function getStorageData(key) {
+    return new Promise((resolve) => {
+        try{
+            chrome.storage.sync.get([key],
+                (result) => {
+                    resolve(result[key]);
+                });
+        }
+        catch(e)
+        {
+            resolve(null);
+        }
+    });
+}
+
+document.body.addEventListener('keydown', async (e) => {
+    const scrollByInput = await getStorageData('scrollByInput') ?? 500;
+    const blurByInput = await getStorageData('blurByInput') ?? 20;
+    const graynessInput = await getStorageData('graynessInput') ?? 100;
+
+    if(e.ctrlKey && e.key == '`')
     {
-        if(e.target.style.filter != "grayscale(1)")
-            e.target.style.filter = "grayscale(1)";
-        else
-            e.target.style.filter = "";
-    }
-    else if(event.ctrlKey && event.key === 'b')
-    {
-        if(e.target.style.filter != "blur(20px)")
-            e.target.style.filter = "blur(20px)";
+        if(!e.target.style.filter || e.target.style.filter == "none")
+            e.target.style.filter = `grayscale(${graynessInput / 100})`;
         else
             e.target.style.filter = "none";
     }
-    else if(event.ctrlKey && e.key == "ArrowDown")
-        window.scrollBy(0, 500);
-    else if(event.ctrlKey && e.key == "ArrowUp")
-        window.scrollBy(0, -500);
+    else if(e.ctrlKey && e.key === 'b')
+    {
+        if(!e.target.style.filter || e.target.style.filter == "none")
+            e.target.style.filter = `blur(${blurByInput}px)`;
+        else
+            e.target.style.filter = "none";
+    }
+    else if(e.ctrlKey && e.key == "ArrowDown")
+        window.scrollBy(0, scrollByInput);
+    else if(e.ctrlKey && e.key == "ArrowUp")
+        window.scrollBy(0, (-1) * scrollByInput);
 })
