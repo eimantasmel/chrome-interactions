@@ -19,6 +19,7 @@ document.body.addEventListener('keydown', async (e) => {
     const scrollByInput = await getStorageData('scrollByInput') ?? 500;
     const blurByInput = await getStorageData('blurByInput') ?? 20;
     const graynessInput = await getStorageData('graynessInput') ?? 100;
+    const emailInput = await getStorageData('emailInput') ?? '';
 
     if(e.ctrlKey && e.key == '`')
     {
@@ -33,6 +34,10 @@ document.body.addEventListener('keydown', async (e) => {
             e.target.style.filter = `blur(${blurByInput}px)`;
         else
             e.target.style.filter = "none";
+    }
+    else if(e.shiftKey && e.ctrlKey && e.key === 'E')
+    {
+        window.open(emailInput, '_blank');
     }
     else if(e.ctrlKey && e.key == "ArrowDown")
         window.scrollBy(0, scrollByInput);
