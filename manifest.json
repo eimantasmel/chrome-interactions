@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Chrome interactions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "On every website we will have the oppurtinity to use some interaction like making website gray, blur or etc...",
   "permissions": ["storage"],
   "icons": {
