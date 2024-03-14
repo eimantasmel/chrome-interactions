@@ -22,16 +22,19 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     const blurByInputVal = await getStorageData('blurByInput') ?? 20;
     const graynessInputVal = await getStorageData('graynessInput') ?? 100;
     const emailInputVal = await getStorageData('emailInput') ?? '';
+    const workPageVal = await getStorageData('workPage') ?? '';
 
     let scrollByInput = document.getElementById('scrollByInput')
     let blurByInput = document.getElementById('blurByInput')
     let graynessInput = document.getElementById('graynessInput')
     let emailInput = document.getElementById('emailInput')
+    let workPage = document.getElementById('workPage')
 
     scrollByInput.value = scrollByInputVal;
     blurByInput.value = blurByInputVal;
     graynessInput.value = graynessInputVal;
     emailInput.value = emailInputVal;
+    workPage.value = workPageVal;
 
     scrollByInput.addEventListener('keyup', (e) => {
         chrome.storage.sync.set({'scrollByInput': e.target.value});
@@ -46,6 +49,9 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     })
     emailInput.addEventListener('keyup', (e) => {
         chrome.storage.sync.set({'emailInput': e.target.value});
+    })
+    workPage.addEventListener('keyup', (e) => {
+        chrome.storage.sync.set({'workPage': e.target.value});
     })
 
 });
