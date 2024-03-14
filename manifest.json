@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Chrome interactions",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "On every website we will have the oppurtinity to use some interaction like making website gray, blur or etc...",
   "permissions": ["storage"],
   "icons": {
@@ -15,5 +15,11 @@
       "js": ["content.js"]
     }
   ],
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["options.html"],
+      "matches": ["http://*/*", "https://*/*", "chrome-extension://*/*"]
+    }
+  ]
 }
