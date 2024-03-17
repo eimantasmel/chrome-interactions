@@ -1,57 +1,16 @@
-async function getStorageData(key) {
-    return new Promise((resolve) => {
-        try{
-            chrome.storage.sync.get([key],
-                (result) => {
-                    if (chrome.runtime.lastError) {
-                        resolve(null);
-                    } else {
-                        resolve(result[key]);
-                    }
-                });
-        }
-        catch(e)
-        {
-            resolve(null);
-        }
-    });
-}
+import getStorageData from '../../utils/getStorageData.js';
 
 document.addEventListener('DOMContentLoaded', async (event) => {
-    const scrollByInputVal = await getStorageData('scrollByInput') ?? 500;
-    const blurByInputVal = await getStorageData('blurByInput') ?? 20;
-    const graynessInputVal = await getStorageData('graynessInput') ?? 100;
-    const emailInputVal = await getStorageData('emailInput') ?? '';
-    const workPageVal = await getStorageData('workPage') ?? '';
 
-    let scrollByInput = document.getElementById('scrollByInput')
-    let blurByInput = document.getElementById('blurByInput')
-    let graynessInput = document.getElementById('graynessInput')
-    let emailInput = document.getElementById('emailInput')
-    let workPage = document.getElementById('workPage')
+    document.querySelectorAll('input').forEach(async (input) => {
+        input.value = await getStorageData(input.id) ?? input.value;
+    });
 
-    scrollByInput.value = scrollByInputVal;
-    blurByInput.value = blurByInputVal;
-    graynessInput.value = graynessInputVal;
-    emailInput.value = emailInputVal;
-    workPage.value = workPageVal;
-
-    scrollByInput.addEventListener('keyup', (e) => {
-        chrome.storage.sync.set({'scrollByInput': e.target.value});
-    })
-
-    blurByInput.addEventListener('keyup', (e) => {
-        chrome.storage.sync.set({'blurByInput': e.target.value});
-    })
-
-    graynessInput.addEventListener('keyup', (e) => {
-        chrome.storage.sync.set({'graynessInput': e.target.value});
-    })
-    emailInput.addEventListener('keyup', (e) => {
-        chrome.storage.sync.set({'emailInput': e.target.value});
-    })
-    workPage.addEventListener('keyup', (e) => {
-        chrome.storage.sync.set({'workPage': e.target.value});
+    document.querySelectorAll('input').forEach((input) => {
+        input.addEventListener('keyup', (e) => {
+            let inputId = e.target.id
+            chrome.storage.sync.set({[inputId]: e.target.value});
+        })
     })
 
 });

@@ -1,17 +1,4 @@
-async function getStorageData(key) {
-    return new Promise((resolve) => {
-        try{
-            chrome.storage.sync.get([key],
-                (result) => {
-                    resolve(result[key]);
-                });
-        }
-        catch(e)
-        {
-            resolve(null);
-        }
-    });
-}
+import getStorageData from './utils/getStorageData.js';
 
 document.body.addEventListener('keydown', async (e) => {
     const scrollByInput = await getStorageData('scrollByInput') ?? 500;
