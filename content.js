@@ -27,10 +27,9 @@ document.body.addEventListener("keydown", async (e) => {
   const graynessInput = (await getStorageData("graynessInput")) ?? 100;
   const emailInput = (await getStorageData("emailInput")) ?? "";
   const workPage = (await getStorageData("workPage")) ?? "";
-
-  if (e.key == "Shift") {
+  let video = document.querySelector("video");
+  if (e.key == "Shift" && video) {
     doubleClickEvent(lastKeyDownContainer, () => {
-      let video = document.querySelector("video");
       if (
         video.getAttribute("listener") &&
         video.getAttribute("listener") != "false"
