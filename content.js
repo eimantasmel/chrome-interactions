@@ -37,18 +37,28 @@ document.body.addEventListener("keydown", async (e) => {
         video.setAttribute("listener", "false");
         video.removeEventListener("pause", blurListener);
         video.removeEventListener("play", unBlurListener);
-        document.body.removeEventListener("keydown", changeMarker);
         video.style.filter = "none";
-
+      } else {
+        video.addEventListener("pause", blurListener);
+        video.addEventListener("play", unBlurListener);
+        video.setAttribute("listener", "true");
+      }
+    });
+  } else if (e.key == "0" || e.key == "Insert") {
+    doubleClickEvent(lastKeyDownContainer, () => {
+      if (
+        document.body.getAttribute("listener") &&
+        document.body.getAttribute("listener") != "false"
+      ) {
+        document.body.setAttribute("listener", "false");
+        document.body.removeEventListener("keydown", changeMarker);
         const elements = document.querySelectorAll("*");
         elements.forEach((element) => {
           element.style.cursor = "auto";
         });
       } else {
-        video.addEventListener("pause", blurListener);
-        video.addEventListener("play", unBlurListener);
         document.body.addEventListener("keydown", changeMarker);
-        video.setAttribute("listener", "true");
+        document.body.setAttribute("listener", "true");
       }
     });
   } else if (e.ctrlKey && e.key == "`") {
