@@ -1,7 +1,10 @@
-export function blurVideo(lastVideoStopContainer) {
+import getStorageData from "./getStorageData";
+
+export async function blurVideo(lastVideoStopContainer) {
   let video = document.querySelector("video");
   lastVideoStopContainer.lastVideoStop = new Date().getTime();
-  video.style.filter = "blur(50px)";
+  const blurByInput = (await getStorageData("blurByInput")) ?? 50;
+  video.style.filter = `blur(${blurByInput}px)`;
 }
 
 export function unBlurVideo(lastVideoStopContainer) {
