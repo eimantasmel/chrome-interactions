@@ -21,5 +21,8 @@
       "resources": ["options.html"],
       "matches": ["http://*/*", "https://*/*", "chrome-extension://*/*"]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
 }
