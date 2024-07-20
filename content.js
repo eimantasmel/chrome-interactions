@@ -7,6 +7,17 @@ let lastVideoStopContainer = { lastVideoStop: 0 };
 const blurListener = () => blurVideo(lastVideoStopContainer);
 const unBlurListener = () => unBlurVideo(lastVideoStopContainer);
 
+
+window.addEventListener('load', async function() {
+  const blurByDefault = (await getStorageData("blur_default")) ?? false;
+  if(!window.location.href.includes('youtube') && blurByDefault){
+    let video = document.querySelector("video");
+    video.setAttribute("listener", "true");
+    video.addEventListener("pause", blurListener);
+    video.addEventListener("play", unBlurListener);
+  }
+});
+
 const changeMarker = (e) => {
   if (e.key == "*") {
     const elements = document.querySelectorAll("*");
@@ -28,6 +39,7 @@ document.body.addEventListener("keydown", async (e) => {
   const emailInput = (await getStorageData("emailInput")) ?? "";
   const workPage = (await getStorageData("workPage")) ?? "";
   let video = document.querySelector("video");
+
   if (e.key == "Shift" && video) {
     doubleClickEvent(lastKeyDownContainer, () => {
       if (
