@@ -1,5 +1,6 @@
 import getStorageData from "./utils/getStorageData.js";
 import doubleClickEvent from "./utils/doubleClick";
+import { isStringContainsAnyValueOfAnArray } from "./utils/functions.js";
 import { unBlurVideo, blurVideo } from "./utils/bluring.js";
 
 let lastKeyDownContainer = { lastKeyDown: null };
@@ -10,11 +11,17 @@ const unBlurListener = () => unBlurVideo(lastVideoStopContainer);
 
 window.addEventListener('load', async function() {
   const blurByDefault = (await getStorageData("blur_default")) ?? false;
-  if(!window.location.href.includes('youtube') && blurByDefault){
-    let video = document.querySelector("video");
-    video.setAttribute("listener", "true");
-    video.addEventListener("pause", blurListener);
-    video.addEventListener("play", unBlurListener);
+  const domains = (await getStorageData("domains")) ?? '';
+  if(!window.location.href.includes('youtube') && blurByDefault && isStringContainsAnyValueOfAnArray(window.location.href, domains.split(' '))){
+    setInterval(() => {
+      let video = document.querySelector("video");
+      if(video && !video.getAttribute('listener'))
+      {
+        video.setAttribute("listener", "true");
+        video.addEventListener("pause", blurListener);
+        video.addEventListener("play", unBlurListener);
+      }
+    }, 3000)
   }
 });
 
