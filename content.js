@@ -12,7 +12,7 @@ const unBlurListener = () => unBlurVideo(lastVideoStopContainer);
 window.addEventListener('load', async function() {
   const blurByDefault = (await getStorageData("blur_default")) ?? false;
   const domains = (await getStorageData("domains")) ?? '';
-  if(!window.location.href.includes('youtube') && blurByDefault && isStringContainsAnyValueOfAnArray(window.location.href, domains.split(' '))){
+  if(blurByDefault && isStringContainsAnyValueOfAnArray(window.location.href, domains.split(' '))){
     setInterval(() => {
       let video = document.querySelector("video");
       if(video && !video.getAttribute('listener'))
