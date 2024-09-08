@@ -25,20 +25,6 @@ window.addEventListener('load', async function() {
   }
 });
 
-const changeMarker = (e) => {
-  if (e.key == "*") {
-    const elements = document.querySelectorAll("*");
-    if (!document.body.style.cursor || document.body.style.cursor == "auto") {
-      elements.forEach((element) => {
-        element.style.cursor =
-          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='14' fill='red'/%3E%3C/svg%3E\"), auto";
-      });
-    } else
-      elements.forEach((element) => {
-        element.style.cursor = "auto";
-      });
-  }
-};
 document.body.addEventListener("keydown", async (e) => {
   const scrollByInput = (await getStorageData("scrollByInput")) ?? 500;
   const blurByInput = (await getStorageData("blurByInput")) ?? 20;
@@ -63,20 +49,24 @@ document.body.addEventListener("keydown", async (e) => {
         video.setAttribute("listener", "true");
       }
     });
-  } else if (e.key == "0" || e.key == "Insert") {
+  } else if (e.key == "Control") {
     doubleClickEvent(lastKeyDownContainer, () => {
+      const elements = document.querySelectorAll("*");
       if (
         document.body.getAttribute("listener") &&
         document.body.getAttribute("listener") != "false"
       ) {
         document.body.setAttribute("listener", "false");
-        document.body.removeEventListener("keydown", changeMarker);
-        const elements = document.querySelectorAll("*");
+        // Removes marker from style.
         elements.forEach((element) => {
           element.style.cursor = "auto";
         });
       } else {
-        document.body.addEventListener("keydown", changeMarker);
+        //Adds marker style
+        elements.forEach((element) => {
+          element.style.cursor =
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='14' fill='red'/%3E%3C/svg%3E\"), auto";
+        });
         document.body.setAttribute("listener", "true");
       }
     });
